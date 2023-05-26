@@ -8,7 +8,7 @@ static int __init modifkernel_init(void)
     struct file *file;
     ssize_t ret;
 
-    file = filp_open("modifkernel.txt", O_WRONLY | O_CREAT, 0644);
+    file = filp_open("SELAMAT HARI LAHIR PANCASILA.txt", O_WRONLY | O_CREAT, 0644);
     if (IS_ERR(file)) {
         pr_err("Failed to create the file\n");
         return PTR_ERR(file);
@@ -32,7 +32,7 @@ out:
 
 static void __exit modifkernel_exit(void)
 {
-    pr_info("modifkernel");
+    pr_info("modifkernelinfo");
 }
 
 module_init(modifkernel_init);
