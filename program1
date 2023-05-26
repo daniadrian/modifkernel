@@ -1,0 +1,42 @@
+#include <linux/module.h>
+#include <linux/kernel.h>
+#include <linux/fs.h>
+#include <linux/uaccess.h>
+
+static int __init <terserah>_init(void)
+{
+    struct file *file;
+    ssize_t ret;
+
+    file = filp_open("<nama teks>.txt", O_WRONLY | O_CREAT, 0644);
+    if (IS_ERR(file)) {
+        pr_err("Failed to create the file\n");
+        return PTR_ERR(file);
+    }
+
+    ret = kernel_write(file, "<isi teks lu>\n", strlen("<isi teks lu>\n"), &file->f_pos);
+    if (ret < 0) {
+        pr_err("Failed to write to the file\n");
+        goto out;
+    }
+
+    filp_close(file, NULL);
+
+    pr_info("<bakal muncul di log>");
+    return 0;
+
+out:
+    filp_close(file, NULL);
+    return ret;
+}
+
+static void __exit <terserah>_exit(void)
+{
+    pr_info("<bakal muncul di log>");
+}
+
+module_init(<terserah>_init);
+module_exit(<terserah>_exit);
+MODULE_LICENSE("GPL");
+MODULE_AUTHOR("Your Name");
+MODULE_DESCRIPTION("<terserah>");
